@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Note;
+use App\Models\Course;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,6 +37,14 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function notes(){
+        return $this->hasMany(Note::class);
+    }
+
+    // public function courses(){
+    //     return $this->hasMany(Course::class);
+    // }
+    
     /**
      * Get the attributes that should be cast.
      *

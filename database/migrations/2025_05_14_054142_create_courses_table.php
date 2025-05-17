@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
+            //$table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->string('url')->unique(); // link video YouTube
             $table->text('description')->nullable();
             $table->string('thumbnail')->nullable();
             $table->string('created_by'); // nama channel YouTube
-            $table->string('level')->default('beginner');
             $table->timestamps();
         });
     }

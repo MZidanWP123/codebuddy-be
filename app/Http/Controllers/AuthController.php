@@ -27,7 +27,7 @@ class AuthController extends Controller
             'name' => $req->name,
             'email' => $req->email,
             'password' => Hash::make($req->password)
-        ]);
+        ]);  
         $token = $user->createToken('Personal Access Token')->plainTextToken;
         $response = ['user' => $user, 'token' => $token];
         return response()->json($response, 200);
