@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Note;
+use App\Models\Course;
 use Illuminate\Http\Request;
 
 class NoteController extends Controller
@@ -32,11 +33,13 @@ class NoteController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'note_title' => 'required|string|max:255',
             'user_id' => 'required|exists:users,id',
             'course_id' => 'required|exists:courses,id',
             'note' => 'required|string',
         ]);
+
+        $course = Course::findOrFail($validated['course_id']);
+        $validated['note_title'] = $course->title;
 
         $note = Note::create($validated);
 
@@ -48,7 +51,6 @@ class NoteController extends Controller
         $note = Note::findOrFail($id);
 
         $validated = $request->validate([
-            'note_title' => 'sometimes|required|string|max:255',
             'note' => 'sometimes|required|string',
             // Biasanya user_id dan course_id tidak diubah setelah dibuat
         ]);

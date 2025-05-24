@@ -13,8 +13,8 @@ class Course extends Model
         'title',
         'url',
         'description',
-        'thumbnail',
         'created_by',
+        'level',
     ];
 
     public function note(){

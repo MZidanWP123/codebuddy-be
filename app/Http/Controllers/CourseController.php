@@ -20,9 +20,8 @@ class CourseController extends Controller
             'title' => 'required|string|max:255',
             'url' => 'required|url|unique:courses',
             'description' => 'nullable|string',
-            'thumbnail' => 'nullable|url',
             'created_by' => 'required|string|max:255',
-            //'level' => 'required|in:beginner,intermediate,advanced',
+            'level' => 'required|in:beginner,intermediate,advanced',
         ]);
 
         $course = Course::create($validated);
@@ -54,9 +53,8 @@ class CourseController extends Controller
             'title' => 'sometimes|required|string|max:255',
             'url' => 'sometimes|required|url|unique:courses,url,' . $id,
             'description' => 'nullable|string',
-            'thumbnail' => 'nullable|url',
             'created_by' => 'sometimes|required|string|max:255',
-            //'level' => 'sometimes|required|in:beginner,intermediate,advanced',
+            'level' => 'sometimes|required|in:beginner,intermediate,advanced',
         ]);
 
         $course->update($validated);
