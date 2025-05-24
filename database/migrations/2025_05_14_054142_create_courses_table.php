@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('title');
             $table->string('url')->unique(); // link video YouTube
             $table->text('description')->nullable();
-            $table->string('thumbnail')->nullable();
             $table->string('created_by'); // nama channel YouTube
+            $table->enum('level', ['beginner', 'intermediate', 'advanced'])->default('beginner');
             $table->timestamps();
         });
     }
