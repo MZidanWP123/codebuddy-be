@@ -6,21 +6,29 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\CourseController;
 
+// ✅ Route publik (tanpa login)
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+// ✅ Route yang butuh login
+Route::middleware('auth:sanctum')->group(function () {
 
-Route::get('/courses', [CourseController::class, 'index']); // list semua course
-Route::get('/courses/search', [CourseController::class, 'findByTitle']); // cari course by title
-Route::post('/courses/create', [CourseController::class, 'store']); // buat course (opsional, admin)
-Route::put('/courses/{id}', [CourseController::class, 'update']); // edit course
-Route::delete('/courses/{id}', [CourseController::class, 'destroy']); // hapus course
+    // 🔐 Ambil user yang sedang login
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
 
-Route::get('/notes', [NoteController::class, 'index']); // list semua notes (bisa difilter user_id)
-Route::get('/notes/search', [NoteController::class, 'findByTitle']); // cari notes by title
-Route::post('/notes/create', [NoteController::class, 'store']); // buat note baru
-Route::put('/notes/{id}', [NoteController::class, 'update']); // update note
-Route::delete('/notes/{id}', [NoteController::class, 'destroy']); // hapus note
+    // 📝 Route Notes (CRUD)
+    Route::get('/notes', [NoteController::class, 'index']);
+    Route::get('/notes/search', [NoteController::class, 'findByTitle']);
+    Route::post('/notes/create', [NoteController::class, 'store']);
+    Route::put('/notes/{id}', [NoteController::class, 'update']);
+    Route::delete('/notes/{id}', [NoteController::class, 'destroy']);
+
+    // 📚 Route Courses (CRUD)
+    Route::get('/courses', [CourseController::class, 'index']);
+    Route::get('/courses/search', [CourseController::class, 'findByTitle']);
+    Route::post('/courses/create', [CourseController::class, 'store']);
+    Route::put('/courses/{id}', [CourseController::class, 'update']);
+    Route::delete('/courses/{id}', [CourseController::class, 'destroy']);
+});
